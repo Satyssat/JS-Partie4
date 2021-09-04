@@ -1,12 +1,59 @@
 let userData = [];
 
-const fetchUser = () => {
-  fetch("https://randomuser.me/api/?results=24")
+//
+//
+//
+//              Fonction fetchUser
+//
+//
+//
+const fetchUser = async () => {
+  await fetch("https://randomuser.me/api/?results=24")
     .then((res) => res.json())
     .then((data) => (userData = data.results));
-  setTimeout(() => {
-    console.log(userData);
-  }, 1000);
+
+  console.log(userData);
 };
 
-fetchUser();
+//
+//
+//
+//              Fonction userDisplay = dateParser + InnerHtml
+//
+//
+//
+const userDiplay = async () => {
+  await fetchUser();
+
+  const dateParser = (date) => {
+    let newDate = new Date(date).toLocaleDateString("fr-FR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    return newDate;
+  };
+
+  const dateCalc = (date) => {
+    let today = new Date();
+    let todayTimestamp = Date.parse(today);
+    let timestamp = Date.parse(date);
+
+    return Math.ceil((todayTimestamp - timestamp) / 8.64e7);
+  };
+  document.body.innerHTML += userData
+    .map(
+      (user) =>
+        `
+        <div class="card">
+          <img src=${user.picture.large} alt="photo de ${user.name.last}">
+          <h3>${user.name.first} ${user.name.last}</h3>  
+          <p>${user.location.country},${dateParser(user.dob.date)}</p>
+          <em>Membre depuis : ${dateCalc(user.registered.date)} jours</em>
+        </div>
+    `
+    )
+    .join("");
+};
+
+userDiplay();
