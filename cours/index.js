@@ -11,7 +11,7 @@
 // fetch("test.txt")
 //   .then((res) => res.text())
 //   .then((data) => (document.body.innerHTML += `<h2>${data}</h2>`));
-
+const titre = document.querySelector("h1");
 const myHeaders = new Headers();
 
 const init = {
@@ -46,15 +46,15 @@ document.querySelector("form").addEventListener("submit", () => {
 // ASYNCHRONE
 //----------------
 
-setTimeout(() => {
-  console.log(`j'apparais 2 secondes après`);
-}, 2000);
+// setTimeout(() => {
+//   console.log(`j'apparais 2 secondes après`);
+// }, 2000);
 
 //-----------------
 // Promise
 //-----------------
 
-fetch("monLien").then((res) => res);
+// fetch("monLien").then((res) => res);
 
 //async/await
 
@@ -63,3 +63,53 @@ async function fetchData() {
 
   console.log("c'est bon !");
 }
+
+//-----------
+// Le Json
+//-----------
+
+// méthode.json => méthode qui s'auto-résout en renvoyant le Body de la requête.
+
+fetch("db.json")
+  .then((res) => res.json())
+  .then((data) => {
+    //stringify => convertit en json
+    let settings = JSON.stringify(data);
+
+    //parse => convertit json en objet js
+    // console.log(JSON.parse(settings));
+  });
+
+//-----------
+// WEB API
+//-----------
+
+// Client Storage
+
+// Local Storage
+
+localStorage.data = "Il y a de la data";
+
+// localStorage.removeItem(data);
+
+// console.log(localStorage.data);
+
+bonjour = () => {
+  if (!localStorage.data == "") {
+    titre.textContent = `${localStorage.data}`;
+  } else {
+    // console.log(localStorage.data);
+    titre.textContent = "Vous êtes nouveau ?";
+  }
+};
+
+bonjour();
+
+const obj = {
+  name: "Satya",
+  age: 24,
+};
+
+localStorage.user = JSON.stringify(obj);
+
+// console.log(JSON.parse(localStorage.user));
