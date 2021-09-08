@@ -113,3 +113,5 @@ const obj = {
 localStorage.user = JSON.stringify(obj);
 
 // console.log(JSON.parse(localStorage.user));
+
+document.cookie = "username=Satya";
